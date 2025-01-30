@@ -1,183 +1,128 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaproszenie na Randeczki!</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #ffe6e6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            text-align: center;
-            width: 90%;
-            max-width: 400px;
-            animation: fadeIn 1s ease-in-out;
-        }
-        button {
-            background: #ff4d6d;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background: #e63950;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-    </style>
-</head>
-<body>
-    <div class="container" id="step1">
-        <h2>Hej, Kochanie! ❤️</h2>
-        <p>Mam dla Ciebie niespodziankę!</p>
-        <button onclick="nextStep(2)">Dalej</button>
-    </div>
-    
-    <div class="container" id="step2" style="display: none;">
-        <h2>Wybierz dzień i godzinę</h2>
-        <input type="date" id="date">
-        <input type="time" id="time">
-        <button onclick="nextStep(3)">Dalej</button>
-    </div>
-    
-    <div class="container" id="step3" style="display: none;">
-        <h2>Co chcesz robić?</h2>
-        <select id="activity" onchange="checkOptions()">
-            <option value="">-- Wybierz opcję --</option>
-            <option value="Kolacja">Kolacja</option>
-            <option value="Spacer">Spacer</option>
-            <option value="Kino">Kino</option>
-            <option value="Spontaniczny wyjazd">Spontaniczny wyjazd</option>
-            <option value="Aktywność fizyczna">Aktywność fizyczna</option>
-            <option value="Pobyt razem">Gdy chcesz ze mną pobyć</option>
-        </select>
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Dominik Piątek - Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
 
-        <div id="dinnerOptions" style="display: none; margin-top: 10px;">
-            <h3>Co na kolację?</h3>
-            <select id="dinnerType">
-                <option value="">-- Wybierz danie --</option>
-                <option value="Sushi">Sushi</option>
-                <option value="Pizza">Pizza</option>
-                <option value="Burger">Burger</option>
-                <option value="Pierogi">Pierogi</option>
-            </select>
-        </div>
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
 
-        <div id="physicalActivityOptions" style="display: none; margin-top: 10px;">
-            <h3>Wybierz aktywność fizyczną:</h3>
-            <select id="physicalActivity">
-                <option value="">-- Wybierz aktywność --</option>
-                <option value="Sauna">Sauna</option>
-                <option value="Basen">Basen</option>
-                <option value="Jacuzzi">Jacuzzi</option>
-                <option value="Siłownia">Siłownia</option>
-                <option value="Taniec">Taniec</option>
-            </select>
-        </div>
+				<!-- Intro -->
+					<div id="intro">
+						<h1>My Portfolio</h1>
+						<p>A showcase of my projects and my abilities.</p>
+						<ul class="actions">
+							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+						</ul>
+					</div>
 
-        <div id="netflixOptions" style="display: none; margin-top: 10px;">
-            <h3>Co przy Netflixie?</h3>
-            <select id="netflixFood">
-                <option value="">-- Wybierz jedzenie --</option>
-                <option value="Pizza z 17">Pizza z 17</option>
-                <option value="Tiramisu">Tiramisu</option>
-                <option value="Lody">Lody</option>
-                <option value="Turasik">Turasik</option>
-            </select>
-        </div>
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">PORTFOLIO</a>
+					</header>
 
-        <button onclick="nextStep(4)">Dalej</button>
-    </div>
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li class="active"><a href="index.html">My Portfolio</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+							<li><a href="https://github.com/dominikpiatek94" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
 
-    <div class="container" id="step4" style="display: none;">
-        <h2>Gotowe! 🎉</h2>
-        <p id="summary"></p>
-        <button onclick="sendToDiscord()">Potwierdź</button>
-        <p id="confirmationMessage" style="display: none; color: green; font-weight: bold;">Zaproszenie wysłane! ❤️</p>
-    </div>
+				<!-- Main -->
+					<div id="main">
 
-    <script>
-        function checkOptions() {
-            document.getElementById('dinnerOptions').style.display = 'none';
-            document.getElementById('physicalActivityOptions').style.display = 'none';
-            document.getElementById('netflixOptions').style.display = 'none';
-            
-            const activity = document.getElementById('activity').value;
-            if (activity === "Kolacja") document.getElementById('dinnerOptions').style.display = 'block';
-            if (activity === "Aktywność fizyczna") document.getElementById('physicalActivityOptions').style.display = 'block';
-            if (activity === "Pobyt razem") document.getElementById('netflixOptions').style.display = 'block';
-        }
+						<!-- Featured Post -->
+							<article class="post featured">
+								<header class="major">
+									<h2><a href="#">My name is Dominik Piątek</a></h2>
+									<p>Cześć! Mam na imię Dominik i jestem początkującym pasjonatem programowania. Moje doświadczenie obejmuje podstawy HTML, CSS i JavaScript, a także zapoznaję się z frameworkiem Bootstrap.
+Choć dopiero zaczynam swoją przygodę z kodowaniem, bardzo chcę poszerzać swoją wiedzę i umiejętności.</p>
+								</header>
+								<a href="#" class="image main"><img src="images/pic01.jpg" alt="" /></a>
+								<ul class="actions special">
+									<li><a href="#" class="button large">Check it out</a></li>
+								</ul>
+							</article>
 
-        function nextStep(step) {
-            document.querySelectorAll('.container').forEach(el => el.style.display = 'none');
-            document.getElementById(`step${step}`).style.display = 'block';
+						<!-- Posts -->
+							<section class="posts">
+								<article>
+									<header>
+								
+										<h2><a href="#">Project 1<br />
+											Przewodnik po perfumach</a></h2>
+									</header>
+									<a href="#" class="image fit"><img src="images/pic02.jpg" alt="" /></a>
+									<p>Moja praca, która jest owocem mojej pasji do zapachów oraz zaangażowania w zdobycie wiedzy na temat doboru perfum.</p>
+									<ul class="actions special">
+										<li><a href="http://html-strona-projekt.s3-website.eu-central-1.amazonaws.com/" class="button">SEE MORE</a></li>
+									</ul>
+								</article>
+								<article>
+									<header>
+										
+										<h2><a href="#">Project 2<br />
+										imperdiet lorem</a></h2>
+									</header>
+									<a href="#" class="image fit"><img src="images/pic03.jpg" alt="" /></a>
+									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna etiam.</p>
+									<ul class="actions special">
+										<li><a href="#" class="button">SEE MORE</a></li>
+									</ul>
+								</article>
+							</section>
 
-            if (step === 4) {
-                const date = document.getElementById('date').value;
-                const time = document.getElementById('time').value;
-                const activity = document.getElementById('activity').value;
-                let details = "";
+						<!-- Footer -->
+							
 
-                if (activity === "Kolacja") details = `, 🍽️ Kolacja: ${document.getElementById('dinnerType').value}`;
-                if (activity === "Aktywność fizyczna") details = `, 🏋️‍♂️ Aktywność: ${document.getElementById('physicalActivity').value}`;
-                if (activity === "Pobyt razem") details = `, 🎬 Netflix + ${document.getElementById('netflixFood').value}`;
-                
-                document.getElementById('summary').innerText = `Wybrałaś: ${activity} o ${time} dnia ${date}${details}`;
-            }
-        }
+					</div>
 
-        function sendToDiscord() {
-            const date = document.getElementById('date').value;
-            const time = document.getElementById('time').value;
-            const activity = document.getElementById('activity').value;
-            let details = "";
+				<!-- Footer -->
+					<footer id="footer">
+						<section class="split contact">
+							<section class="alt">
+								<h3>Address</h3>
+								<p>Lublin<br /></p>
+							</section>
+							<section>
+								<h3>Phone</h3>
+								<p><a href="#">533</a></p>
+							</section>
+							<section>
+								<h3>Email</h3>
+								<p><a href="#">dominikpiatek94@gmail.com</a></p>
+							</section>
+							<section>
+								<h3>Social</h3>
+								<ul class="icons alt">
+									<li><a href="#" class="icon brands alt fa-linkedin"><span class="label">Linkedin</span></a></li>
+									<li><a href="https://github.com/dominikpiatek94" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+								</ul>
+							</section>
+						</section>
+					</footer>
 
-            if (activity === "Kolacja") details = `, 🍽️ Kolacja: ${document.getElementById('dinnerType').value}`;
-            if (activity === "Aktywność fizyczna") details = `, 🏋️‍♂️ Aktywność: ${document.getElementById('physicalActivity').value}`;
-            if (activity === "Pobyt razem") details = `, 🎬 Netflix + ${document.getElementById('netflixFood').value}`;
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Dominik Piątek</li><li></li></ul>
+					</div>
 
-            const message = `Wybrałaś: ${activity} o ${time} dnia ${date}${details}`;
+			</div>
 
-            // Wprowadź swój webhook URL tutaj
-            const webhookURL = 'https://discord.com/api/webhooks/1334304388793106434/mGwNRP3UyyHk_blVVYGOsDtG-tvul7m1oOZRbyKnzoYH_GtP9wjIISNAb95BWxv7X0UF';
-
-            fetch(webhookURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    content: message,
-                }),
-            })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById('confirmationMessage').style.display = 'block';
-                } else {
-                    console.error('Błąd podczas wysyłania wiadomości na Discord:', response.statusText);
-                }
-            })
-            .catch(error => {
-                console.error('Błąd:', error);
-            });
-        }
-    </script>
-</body>
-</html>
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
